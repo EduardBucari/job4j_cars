@@ -1,85 +1,55 @@
 create table users
 (
-    id serial primary key ,
-    name varchar(255) not null ,
-    password varchar(255) not null ,
-    email varchar(255) not null
+    id serial primary key,
+    name varchar (255),
+    email varchar (255),
+    password varchar (255)
 );
 
-create table carBrands
-(
-    id serial primary key ,
-    carBrand varchar(255) not null
-);
-
-create table bodyTypes
-(
-    id serial primary key ,
-    bodyType varChar(255) not null
-);
-
-create table transmissions
-(
-    id serial primary key ,
-    transmission varchar(255) not null
-);
-
-create table carModels
-(
-    id serial primary key ,
-    carModel varchar(255) not null ,
-    carBrand_id int references carBrands(id) ,
-    bodyType_id int references bodyTypes(id)
-);
-
-create table carModels_transmissions
-(
-    id serial primary key ,
-    carModel_id int references carModels(id),
-    transmission_id int references transmissions(id)
-);
-
-create table carAds
-(
-    id serial primary key ,
-    description varchar(255) not null ,
-    price numeric not null ,
-    photo varchar(255) not null ,
-    isSold boolean not null ,
-    manufactureYear int not null ,
-    mileage int not null ,
-    created data not null,
-    user_id int references users(id) ,
-    carBrand_id int references carBrands(id) ,
-    carModel_id int references carModels(id) ,
-    bodyType_id int references bodyTypes(id) ,
-    transmission_id int references transmissions(id)
-);
-
-create table drivers
+create table categories
 (
     id serial primary key,
-    name varchar(30) not null,
-    surname varchar(30) not null
+    name varchar (255)
 );
 
-create table engines
+create table brands
 (
     id serial primary key,
-    name varchar(30) not null
+    name varchar (255)
 );
 
-create table cars
+create table bodies
 (
     id serial primary key,
-    brand varchar(30) not null ,
-    model varchar(30) not null ,
-    engine_id int references engines(id)
+    name varchar (255)
 );
 
-create table history_owner
+create table items
 (
     id serial primary key,
-    driver_id int references drivers(id),
-    car_id int references cars(id)
+    description varchar (255),
+    sold boolean,
+    category_id int references categories(id),
+    brand_id int references brands(id),
+    body_id int references bodies(id),
+    user_id int references users(id),
+    created TIMESTAMP,
+    photo boolean
 );
+
+create table users_items
+(
+    user_id int references users(id),
+    item_id int references items(id)
+);
+
+insert into categories (name) values ('Грузовые');
+insert into categories (name) values ('Легковые');
+insert into categories (name) values ('Коммерческие');
+insert into brands (name) values ('Mercedes');
+insert into brands (name) values ('BMW');
+insert into brands (name) values ('Toyota');
+insert into brands (name) values ('Renault');
+insert into bodies (name) values ('универсал');
+insert into bodies (name) values ('хэтчбек');
+insert into bodies (name) values ('седан');
