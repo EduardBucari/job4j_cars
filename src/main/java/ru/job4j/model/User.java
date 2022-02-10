@@ -1,14 +1,13 @@
 package ru.job4j.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -19,15 +18,16 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    private List<CarAd> carAdsList = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Item> items = new HashSet<>();
 
-    public static User of(String name, String email, String password) {
-        User user = new User();
-        user.name = name;
-        user.email = email;
-        user.password = password;
-        return user;
+    public User() {
+    }
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
     public int getId() {
@@ -62,12 +62,16 @@ public class User {
         this.password = password;
     }
 
-    public List<CarAd> getCarAdsList() {
-        return carAdsList;
+    public Set<Item> getItems() {
+        return items;
     }
 
-    public void setCarAdsList(List<CarAd> carAdsList) {
-        this.carAdsList = carAdsList;
+    public void setItems(Set<Item> items) {
+        this.items = items;
+    }
+
+    public void addItems(Item item) {
+        this.items.add(item);
     }
 
     @Override
@@ -79,16 +83,11 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return id == user.id && Objects.equals(name, user.name) && Objects.equals(email, user.email);
+        return id == user.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", name='" + name + ", email='" + email + "'}'";
+        return Objects.hash(id, name, email, password, items);
     }
 }
