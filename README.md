@@ -32,3 +32,8 @@ Job4j_cars - вэб приложение, площадка для продажи
 mvn install
 
 Скрипты для базы данных: db/schema.sql
+
+![alt text](https://github.com/EduardBucari/job4j_cars/blob/master/images/CarsTest1.PNG)
+![alt text](https://github.com/EduardBucari/job4j_cars/blob/master/images/CarsTest2.PNG)
+![alt text](https://github.com/EduardBucari/job4j_cars/blob/master/images/CarsTest3.PNG)
+![alt text](https://github.com/EduardBucari/job4j_cars/blob/master/images/CarsTest4.PNG)
