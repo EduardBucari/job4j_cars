@@ -35,42 +35,46 @@
 <div class="container">
     <div class="row">
         <h1 class="center-align">
-            Добавить фото
+            <c:out value="${post.model.brand.name}"/>
+            <c:out value="${post.model.name}"/>
+            <c:out value="${post.productionYear}"/>
+            <span><c:out value="${post.price}"/> Р </span>
         </h1>
     </div>
     <div class="row">
-        <div class="col s6">
-            <div class="card-panel">
-                <form action="<c:url value='/uploadPhoto?id=${param.id}'/>" method="post" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="file-field input-field">
-                            <div class="btn">
-                                <span>Выберете фото</span>
-                                <input type="file" name="file">
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <button class="btn waves-effect waves-light" type="submit">добавить фото
-                            <i class="material-icons right">send</i>
-                        </button>
-                    </div>
-                </form>
+        <div class="col s4">
+            <div class="card-panel" style="font-size: 20px">
+                <p>Год выпуска: <c:out value="${post.productionYear}"/></p>
+                <p>Пробег: <c:out value="${post.mileage}"/></p>
+                <p>Цвет: <c:out value="${post.color}"/></p>
+                <p>Кузов: <c:out value="${post.carBoby.name}"/></p>
+                <p>Коробка: <c:out value="${post.transmission.name}"/></p>
+                <p>Привод: <c:out value="${post.driveUnit}"/></p>
+                <p>Комментарий продавца: <c:out value="${post.description}"/></p>
+                <p>Продавец: <c:out value="${post.user.name}"/></p>
+                <p>Телефон: <c:out value="${post.user.phone}"/></p>
+            </div>
+        </div>
+        <div class="col s8">
+            <div class="card">
+                <div class="carousel carousel-slider">
+                    <c:forEach items="${post.photos}" var="photo">
+                        <a class="carousel-item" href="#!"> <img
+                                src="<c:url  value='/downloadPost?path=${photo.path}'/>" /> </a>
+                    </c:forEach>
+                </div>
             </div>
         </div>
     </div>
-
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script src="js/filter.js"></script>
-
 <script>
     $(document).ready(function () {
-    });
-</script>
+        $('.carousel.carousel-slider').carousel({
+            fullWidth: true,
+            indicators: true
+        });
+    });</script>
 </body>
 </html>

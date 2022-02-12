@@ -1,55 +1,59 @@
-create table users
+create table if not exists brands
 (
-    id serial primary key,
-    name varchar (255),
-    email varchar (255),
-    password varchar (255)
+    id   serial primary key,
+    name varchar
+);
+create table if not exists carBodies
+(
+    id   serial primary key,
+    name varchar
 );
 
-create table categories
+create table if not exists models
 (
-    id serial primary key,
-    name varchar (255)
+    id       serial primary key,
+    name     varchar,
+    brand_id int references brands (id)
 );
 
-create table brands
+create table if not exists photos
 (
-    id serial primary key,
-    name varchar (255)
+    id   serial primary key,
+    name varchar,
+    path varchar
+
+);
+create table if not exists posts
+(
+    id               serial primary key,
+    created          timestamp,
+    description      varchar,
+    isSale           boolean not null,
+    name             varchar,
+    productionYear   int,
+    carBoby_id       int references carBodies (id),
+    model_id         int references models (id),
+    transmissions_id int references transmissions (id),
+
+    user_id          int references users (id)
 );
 
-create table bodies
+create table if not exists posts_photos
 (
-    id serial primary key,
-    name varchar (255)
+    post_id   int references posts (id),
+    photos_id int references photos (id)
 );
 
-create table items
+create table if not exists transmissions
 (
-    id serial primary key,
-    description varchar (255),
-    sold boolean,
-    category_id int references categories(id),
-    brand_id int references brands(id),
-    body_id int references bodies(id),
-    user_id int references users(id),
-    created TIMESTAMP,
-    photo boolean
+    id   serial primary key,
+    name varchar
 );
 
-create table users_items
+create table if not exists users
 (
-    user_id int references users(id),
-    item_id int references items(id)
+    id    serial primary key,
+    email varchar,
+    name  varchar,
+    phone varchar
 );
-
-insert into categories (name) values ('Грузовые');
-insert into categories (name) values ('Легковые');
-insert into categories (name) values ('Коммерческие');
-insert into brands (name) values ('Mercedes');
-insert into brands (name) values ('BMW');
-insert into brands (name) values ('Toyota');
-insert into brands (name) values ('Renault');
-insert into bodies (name) values ('универсал');
-insert into bodies (name) values ('хэтчбек');
-insert into bodies (name) values ('седан');
