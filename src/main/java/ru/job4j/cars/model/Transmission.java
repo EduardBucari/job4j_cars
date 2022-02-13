@@ -1,30 +1,23 @@
-package ru.job4j.model;
+package ru.job4j.cars.model;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 @Entity
-@Table(name = "categories")
-public class CategoryCar {
+@Table(name = "transmissions")
+public class Transmission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String name;
 
-    public CategoryCar() {
+    public static Transmission of(String name) {
+        Transmission transmission = new Transmission();
+        transmission.name = name;
+        return transmission;
     }
-
-    public CategoryCar(String name) {
-        this.name = name;
-    }
-
-    public CategoryCar(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
 
     public int getId() {
         return id;
@@ -50,12 +43,21 @@ public class CategoryCar {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        CategoryCar categoryCar = (CategoryCar) o;
-        return id == categoryCar.id;
+
+        Transmission that = (Transmission) o;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Transmission.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("name='" + name + "'")
+                .toString();
     }
 }

@@ -3,6 +3,7 @@ create table if not exists brands
     id   serial primary key,
     name varchar
 );
+
 create table if not exists carBodies
 (
     id   serial primary key,
@@ -23,6 +24,7 @@ create table if not exists photos
     path varchar
 
 );
+
 create table if not exists posts
 (
     id               serial primary key,

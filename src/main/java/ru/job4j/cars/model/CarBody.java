@@ -1,27 +1,23 @@
-package ru.job4j.model;
+package ru.job4j.cars.model;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 @Entity
-@Table(name = "brands")
-public class Brand {
+@Table(name = "carBodies")
+
+public class CarBody {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String name;
 
-    public Brand() {
-    }
-
-    public Brand(String name) {
-        this.name = name;
-    }
-
-    public Brand(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public static CarBody of(String name) {
+        CarBody carBody = new CarBody();
+        carBody.name = name;
+        return carBody;
     }
 
     public int getId() {
@@ -48,12 +44,20 @@ public class Brand {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Brand brand = (Brand) o;
-        return id == brand.id;
+        CarBody carBody = (CarBody) o;
+        return id == carBody.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", CarBody.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("name='" + name + "'")
+                .toString();
     }
 }
